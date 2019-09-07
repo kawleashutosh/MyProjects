@@ -1,0 +1,52 @@
+###############################################################################################################
+#   created by : Ashutosh Kawle                                                                               #
+#   Date : 07/09/2019                                                                                         #
+#   understanding GGplot 2                                                                                    #
+#   data set  - iris data                                                                                     #
+###############################################################################################################
+
+data("iris")
+View(iris)
+data()
+
+########## This tutorial is aimed at understanding various functions in ggplot 2 library ##################
+install.packages("ggplot2")
+library(ggplot2)
+# steps to create plot with ggplot 
+# 1 define the data source 
+# 2 create aes aesthatics
+# 3 provide a geomatry 
+
+#1 load the data - this will give the blank page 
+ g1 <-ggplot(data = iris,aes(x=iris$Sepal.Width,y = iris$Sepal.Length,col=iris$Species))
+ g1+geom_point()
+# putting color and shape both in aesthatics 
+ g1 <-ggplot(data = iris,aes(x=iris$Sepal.Width,y = iris$Sepal.Length,col=iris$Species,shape=iris$Species)) 
+ g1+geom_point()
+ 
+#creatig histogram with ggplot2
+ ghist <- ggplot(data=iris,aes(x=iris$Sepal.Length))
+ ghist+geom_histogram()
+#default bin width is 30 , this can be increased or decreased based on by usin bins in bin = 
+ ghist+geom_histogram(bins = 60)+geom_freqpoly()
+
+#providing colors to the histogram and polygon
+ 
+g2 <-ghist+geom_histogram(bins = 10,fill='palegreen',col ='green')+geom_freqpoly(col='blue',bins=10)
+g2+labs(title = 'Distribution of sepal length',x='Sepal length',y='counts')
+
+#creating coelation matrix with ggplot 2
+test1 <- round(cor(iris[,c(1:3)]),2)
+
+# Create the correlation heatmap with ggplot2
+library(reshape2)
+melted_cormat <- melt(test1)
+head(melted_cormat)
+
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) +  geom_tile(color = "white")+
+                      scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                      midpoint = 0, limit = c(-1,1), space = "Lab", 
+                      name="Pearson\nCorrelation") +
+                      geom_text(aes(Var2, Var1, label = value), color = "black", size = 4)
+
+ 
