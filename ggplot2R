@@ -48,5 +48,10 @@ ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) +  geom_tile(color
                       midpoint = 0, limit = c(-1,1), space = "Lab", 
                       name="Pearson\nCorrelation") +
                       geom_text(aes(Var2, Var1, label = value), color = "black", size = 4)
+# creating box plot 
+gbxplt <- ggplot(data=iris,aes(y=iris$Sepal.Length,x=iris$Species))+geom_boxplot(fill='palegreen')
+
+
+
 
  
